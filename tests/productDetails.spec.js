@@ -37,8 +37,7 @@ describe('6 - Implemente os casos de teste para a função `productDetails`', ()
     expect(typeof productDetails('prato', 'mesa')[0]).toBe('object');
     expect(typeof productDetails('prato', 'mesa')[1]).toBe('object');
     expect(productDetails('luva', 'alcool em gel')[0]).not.toEqual(productDetails('luva', 'alcool em gel')[1]);
-    expect(productDetails('prato', 'mesa')[0].details.productId).toMatch('123');
-    expect(productDetails('prato', 'mesa')[1].details.productId).toMatch('123');
-    // Teste se os dois productIds terminam com 123.
+    expect(productDetails('prato', 'mesa')[0].details.productId.endsWith('123')).toBeTruthy();
+    expect(productDetails('prato', 'mesa')[1].details.productId.endsWith('123')).toBeTruthy();
   });
 });
