@@ -54,7 +54,7 @@
 
 */
 
-// PASSO 1: Crie uma função `createMenu()` que, recebendo um objeto como parâmetro, retorna esse objeto no seguinte formato: 
+// PASSO 1: Crie uma função `createMenu()` que, recebendo um objeto como parâmetro, retorna esse objeto no seguinte formato:
 //  { fetchMenu: () => objetoPassadoPorParametro }.
 //
 // Agora faça o TESTE 4 no arquivo `tests/restaurant.spec.js`.
@@ -67,19 +67,19 @@
 
 //------------------------------------------------------------------------------------------
 
-// PASSO 3: Crie uma função, separada da função `createMenu()`, que, ao receber uma string como parâmetro, 
+// PASSO 3: Crie uma função, separada da função `createMenu()`, que, ao receber uma string como parâmetro,
 // adiciona essa string ao array de `objetoRetornado.consumption`. Essa nova função será adicionada à chave `order`.
-// 
-// DICA PARA DESENVOLVIMENTO: 
+//
+// DICA PARA DESENVOLVIMENTO:
 // - Definir a função `createMenu()`
-// - Definir o objeto que a `createMenu()` retorna, mas separadamente 
+// - Definir o objeto que a `createMenu()` retorna, mas separadamente
 // - E depois, definir essa nova função que será atribuída a `order`.
 // ```
 // const restaurant = {}
 //
 // const createMenu = (myMenu) => // Lógica que edita o objeto `restaurant`
 //
-// const orderFromMenu = (request) => // Lógica que adiciona à chave `consumption` de `restaurant` a string recebida no parâmetro `request`. 
+// const orderFromMenu = (request) => // Lógica que adiciona à chave `consumption` de `restaurant` a string recebida no parâmetro `request`.
 // // Essa função deve ser associada à chave `order` de `restaurant`
 // ```
 // Agora faça o TESTE 6 no arquivo `tests/restaurant.spec.js`.
@@ -93,6 +93,71 @@
 // - retornará o valor somado acrescido de 10%.
 // DICA: para isso, você precisará percorrer tanto o objeto da chave `food` quanto o objeto da chave `drink`.
 
-const createMenu = () => {};
+const restaurant = {};
+const consumption = [];
+const pay = 0;
+
+function newList(boolean) {
+  if (boolean === true) {
+    for (let i = consumption.length - 1; i >= 0; i -= 1) {
+      restaurant.consumption.shift();
+    }
+  }
+}
+
+const addItem = (string, boolean) => {
+  newList(boolean);
+  const pedidos = string.split(', ');
+  for (let i = 0; i < pedidos.length; i += 1) {
+    restaurant.consumption.push(pedidos[i].toLowerCase());
+  }
+};
+
+const calcBillComidas = () => {
+  let billComidas = 0;
+  const pedidos = restaurant.consumption;
+  const menuComidas = Object.entries(restaurant.fetchMenu().food);
+  for (let i = 0; i < pedidos.length; i += 1) {
+    for (let index = 0; index < menuComidas.length; index += 1) {
+      if (pedidos[i] === menuComidas[index][0]) {
+        billComidas += menuComidas[index][1];
+      }
+    }
+  }
+  return billComidas;
+};
+
+const calcBillBebidas = () => {
+  let billBebidas = 0;
+  const pedidos = restaurant.consumption;
+  const menuBebidas = Object.entries(restaurant.fetchMenu().drink);
+  for (let i = 0; i < pedidos.length; i += 1) {
+      for (let index = 0; index < menuBebidas.length; index += 1) {
+        if (pedidos[i] === menuBebidas[index][0]) {
+          billBebidas += menuBebidas[index][1];
+      }
+    }
+  }
+  return billBebidas;
+};
+
+const calcBill = () => {
+  let sum = 0;
+  if (restaurant.consumption.length > 0) {
+    let food = calcBillComidas();
+    let drink = calcBillBebidas();
+    sum = (food + drink + ((food + drink) * 0.1)).toPrecision(4);
+  }
+  return sum;
+};
+
+const createMenu = (menu) => {
+  const fetchMenu = () => menu;
+  restaurant.fetchMenu = fetchMenu;
+  restaurant.order = addItem;
+  restaurant.consumption = consumption;
+  restaurant.pay = calcBill;
+  return restaurant;
+};
 
 module.exports = createMenu;
