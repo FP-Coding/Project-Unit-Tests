@@ -116,27 +116,27 @@ const addItem = (string, boolean) => {
 const calcBillComidas = () => {
   let billComidas = 0;
   const pedidos = restaurant.consumption;
-  const menuComidas = Object.entries(restaurant.fetchMenu().food);
+  const menuComidasKeys = Object.keys(restaurant.fetchMenu().food);
+  const menuComidasValues = Object.values(restaurant.fetchMenu().food);
   for (let i = 0; i < pedidos.length; i += 1) {
-    for (let index = 0; index < menuComidas.length; index += 1) {
-      if (pedidos[i] === menuComidas[index][0]) {
-        billComidas += menuComidas[index][1];
+    if (menuComidasKeys.includes(pedidos[i]) === true) {
+      const indexItem = menuComidasKeys.indexOf(pedidos[i]);
+      billComidas += menuComidasValues[indexItem];
       }
     }
-  }
   return billComidas;
 };
 
 const calcBillBebidas = () => {
   let billBebidas = 0;
   const pedidos = restaurant.consumption;
-  const menuBebidas = Object.entries(restaurant.fetchMenu().drink);
+  const menuBebidasKeys = Object.keys(restaurant.fetchMenu().drink);
+  const menuBebidasValues = Object.values(restaurant.fetchMenu().drink);
   for (let i = 0; i < pedidos.length; i += 1) {
-      for (let index = 0; index < menuBebidas.length; index += 1) {
-        if (pedidos[i] === menuBebidas[index][0]) {
-          billBebidas += menuBebidas[index][1];
+        if (menuBebidasKeys.includes(pedidos[i]) === true) {
+          const indexItem = menuBebidasKeys.indexOf(pedidos[i]);
+          billBebidas += menuBebidasValues[indexItem];
       }
-    }
   }
   return billBebidas;
 };
