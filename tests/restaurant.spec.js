@@ -67,19 +67,21 @@ describe('10 - Implemente os casos de teste e a função `createMenu`', () => {
   it('Verifica se a função dentro do parametro `Order` funciona corretament', () => {
     
     const addCoxinha = createMenu(objeto3);
-    addCoxinha.order('coxinha', true);
+    addCoxinha.order('coxinha');
     expect(addCoxinha.consumption).toEqual(['coxinha']);
 
     const addPedido1 = createMenu(objeto1);
-    addPedido1.order('coxinha, sopa, agua', true);
+    addPedido1.order('coxinha, sopa, agua');
     expect(addPedido1.consumption).toEqual(['coxinha', 'sopa', 'agua']);
     
     const addPedido2 = createMenu(objeto1);
-    addPedido2.order('coxinha, sopa, agua', true);
-    addPedido2.order('coxinha', false);
+    addPedido2.order('coxinha, sopa, agua');
+    addPedido2.order('coxinha');
     expect(addPedido2.consumption).toEqual(['coxinha', 'sopa', 'agua', 'coxinha']);
   })
   it('Verifica se a função `pay` funciona corretamente', () => {
-    expect(parseFloat(createMenu(objeto1).pay())).toBeCloseTo(23.76);
+    const addPedido3 = createMenu(objeto1);
+    addPedido3.order('coxinha, sopa, agua, coxinha');
+    expect(parseFloat(addPedido3.pay())).toBeCloseTo(23.76);
   } )
 });

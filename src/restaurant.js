@@ -94,19 +94,8 @@
 // DICA: para isso, você precisará percorrer tanto o objeto da chave `food` quanto o objeto da chave `drink`.
 
 const restaurant = {};
-const consumption = [];
-const pay = 0;
 
-function newList(boolean) {
-  if (boolean === true) {
-    for (let i = consumption.length - 1; i >= 0; i -= 1) {
-      restaurant.consumption.shift();
-    }
-  }
-}
-
-const addItem = (string, boolean) => {
-  newList(boolean);
+const addItem = (string) => {
   const pedidos = string.split(', ');
   for (let i = 0; i < pedidos.length; i += 1) {
     restaurant.consumption.push(pedidos[i].toLowerCase());
@@ -152,6 +141,7 @@ const calcBill = () => {
 };
 
 const createMenu = (menu) => {
+  const consumption = [];
   const fetchMenu = () => menu;
   restaurant.fetchMenu = fetchMenu;
   restaurant.order = addItem;
